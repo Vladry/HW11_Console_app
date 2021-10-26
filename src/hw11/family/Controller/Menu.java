@@ -1,5 +1,8 @@
 package hw11.family.Controller;
 
+import hw11.family.IncorrectChoiceException;
+import hw11.family.service.FamilyService;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -36,26 +39,25 @@ public class Menu {
             System.out.println(entry.getValue() + ";");
         }
     }
+
     public static String getChoice() {
         System.out.println("\ninput your choice here:");
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String choice = null;
-        try{
-            choice = br.readLine();
-        }catch(IOException e){
-            System.out.println("ошибка ввода br.readLine()");
-        }
-        return choice;
+        return FamilyService.getKeyboardInput();
     }
-    public static void actionConfirmation(String choice){
-        System.out.print("you've chosen: " + choice + ". Now, we'll ");
+
+    public static boolean actionConfirmation(String choice) {
+        String errMsg = "There's no such option. Please, re-input your choice:";
         String action = null;
         try {
             action = items.get(choice);
+            if (action == null) throw new IncorrectChoiceException(errMsg);
+            System.out.print("you've chosen: " + choice + ". Now, we'll ");
             System.out.println(action);
-        } catch (Exception e) {
-            System.out.println("ask you to make a correct choice");
+        } catch (IncorrectChoiceException e) {
+            System.out.println(e.getMessage());
+            return false;
         }
+        return true;
     }
 
 }

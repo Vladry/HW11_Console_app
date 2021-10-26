@@ -4,6 +4,9 @@ import hw11.family.Animals.*;
 import hw11.family.DAO.FamilyDAO;
 import hw11.family.People.*;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -18,7 +21,16 @@ public class FamilyService implements Services {
         this.dao = dao;
     }
 
-    ;
+    public static String getKeyboardInput(){
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String choice = null;
+        try {
+            choice = br.readLine();
+        } catch (IOException e) {
+            System.out.println("ошибка ввода br.readLine()");
+        }
+        return choice;
+    }
 
     public void displayAllFamilies() {
         System.out.println("all families to screen: ");
