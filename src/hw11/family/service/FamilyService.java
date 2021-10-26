@@ -37,8 +37,6 @@ public class FamilyService implements Services {
         dao.getAllFamilies().forEach(f-> System.out.println(f.prettyFormat() ) );
     }
 
-    ;
-
     public Optional<List<Family>> getFamiliesBiggerThan(int num) {
         if (num <= 0) return Optional.empty();
         System.out.println("FamiliesBiggerThan " + num + " :");

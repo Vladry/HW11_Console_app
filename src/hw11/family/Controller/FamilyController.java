@@ -31,7 +31,6 @@ public class FamilyController {
 //        FamilyService.getFamilyById(3);
 
 
-//        FamilyService.countFamiliesWithMemberNumber(4);
 //        FamilyService.deleteFamilyByIndex(1);
 //        FamilyService.deleteAllChildrenOlderThen(9);
 //        FamilyService.count();
@@ -50,7 +49,7 @@ public class FamilyController {
             if (!skipFlag) {
                 continue;
             }
-            System.out.println("choice is approved, let's continue...");
+//            System.out.println("choice is approved, let's continue...");
 
             processRequests(choice);
         }
@@ -96,6 +95,18 @@ public class FamilyController {
         }
     }
 
+    private int getAmtOfMembers() {
+        System.out.println("Input number of family members: ");
+        return parseInt(hw11.family.service.FamilyService.getKeyboardInput());
+    }
+    private boolean checkInputInt(int ind, int size){
+        if (ind < 0 || ind > size) {
+            System.out.println("incorrect number, returning to main menu");
+            return false;
+        }
+        return true;
+    }
+
     public void processRequests(String choice) {
         switch (choice) {
             case "1":
@@ -105,34 +116,43 @@ public class FamilyController {
                 FamilyService.displayAllFamilies();
                 break;
             case "3":
-                System.out.println("Input number of family members: ");
-                String inp = hw11.family.service.FamilyService.getKeyboardInput();
-//                String inp = FamilyService.getKeyboardInput();
-                int amount = parseInt(inp);
-                FamilyService.getFamiliesBiggerThan(amount);
+                FamilyService.getFamiliesBiggerThan(getAmtOfMembers());
                 break;
             case "4":
-                System.out.println("Input number of family members: ");
-                String inp2 = hw11.family.service.FamilyService.getKeyboardInput();
-//                String inp2 = FamilyService.getKeyboardInput();
-                int amount2 = parseInt(inp2);
-                FamilyService.getFamiliesLessThan(amount2);
+                FamilyService.getFamiliesLessThan(getAmtOfMembers());
                 break;
-
             case "5":
-
+                int searchedMembers = getAmtOfMembers();
+                int amntOfFamiliesFound = FamilyService.countFamiliesWithMemberNumber(searchedMembers);
+                System.out.println("\t\t\tWe've found " + amntOfFamiliesFound
+                        + " families with " + searchedMembers + " family members in them");
                 break;
             case "6":
 
                 break;
             case "7":
-
+                System.out.println("Input index of family being deleted:");
+                int familiesLeft = FamilyService.count() - 1;
+                System.out.println("available range: from 0 to " + (familiesLeft));
+                int famIndex = parseInt(hw11.family.service.FamilyService.getKeyboardInput());
+                if (!checkInputInt(famIndex, familiesLeft)) {break;}
+                FamilyService.deleteFamilyByIndex(famIndex);
                 break;
             case "8":
+                System.out.println("Input family number:");
+                int familiesTotal = FamilyService.count() - 1;
+                System.out.println("available range: from 0 to " + (familiesTotal));
+                int famNumber = parseInt(hw11.family.service.FamilyService.getKeyboardInput());
+                if (!checkInputInt(famNumber, familiesTotal) ) {break;}
+
+
+
 
                 break;
             case "9":
-
+                System.out.println("Input age of children being deleted:");
+                int age = parseInt(hw11.family.service.FamilyService.getKeyboardInput());
+                FamilyService.deleteAllChildrenOlderThen(age);
                 break;
             default:
                 System.out.println("больше нет команд");

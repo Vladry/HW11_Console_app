@@ -29,8 +29,9 @@ public class CollectionFamilyDao<T> implements FamilyDAO<T> {
         System.out.println("deleting family: " + memoryStore.get(i));
         try {
             memoryStore.remove(i);
-            System.out.println("delete operation successful, updated family list: ");
-            System.out.println(memoryStore);
+            System.out.println("delete operation successful!");
+//            System.out.println("updated family list: ");
+//            System.out.println(memoryStore);
             return true;
         } catch (NullPointerException e) {
             return false;
