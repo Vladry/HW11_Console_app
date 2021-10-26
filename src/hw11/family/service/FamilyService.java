@@ -22,7 +22,7 @@ public class FamilyService implements Services {
 
     public void displayAllFamilies() {
         System.out.println("all families to screen: ");
-        dao.getAllFamilies().forEach(System.out::println);
+        dao.getAllFamilies().forEach(f-> System.out.println(f.prettyFormat() ) );
     }
 
     ;

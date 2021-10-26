@@ -31,6 +31,11 @@ public abstract class Pet {
         this.trickLevel = trickLevel;
     }
 
+    public String prettyFormat() {
+        return "species: " + species + " {nickname: " + nickname +
+                "}\n";
+    }
+
     public void eat() {
         System.out.println("Я кушаю!");
     }

@@ -62,6 +62,12 @@ public abstract class Human {
         this.birthDate = LocalDate.parse(birthDateStr, DateTimeFormatter.ofPattern("dd/MM/yyyy"));  // 20/03/2016
     }
 
+    public String prettyFormat() {
+        return "{ name: " + this.getName() + ", surname: " + this.getSurname() +
+                ", birthDay: " + this.getBirthDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ", iq: " + this.getIq() +
+                " }\n";
+    }
+
     public String describeAge(){
         LocalDate now = LocalDate.now();
         String dateString;
@@ -77,8 +83,6 @@ public abstract class Human {
         System.out.println(dateString);
         return dateString;
     }
-
-
 
     public void greetPet(Pet pet) {
         System.out.println("Привет, " + pet.getNickname());
@@ -175,8 +179,8 @@ public abstract class Human {
 
     @Override
     public String toString() {
-        return "Human{ name=" + this.getName() + ", surname= " + this.getSurname() +
-                ", year=" + this.getBirthDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ", iq=" + this.getIq() +
+        return "{ name: " + this.getName() + ", surname: " + this.getSurname() +
+                ", birthDate: " + this.getBirthDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ", iq: " + this.getIq() +
                 "}\n ";
     }
 

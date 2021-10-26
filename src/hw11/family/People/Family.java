@@ -1,6 +1,7 @@
 package hw11.family.People;
 
 import hw11.family.Animals.Pet;
+import org.w3c.dom.ls.LSOutput;
 
 import java.util.ArrayList;
 //import java.util.LinkedList;
@@ -34,6 +35,14 @@ public class Family implements HumanCreator {
         this.father = father;
         this.mother = mother;
     }
+
+    public String prettyFormat() {
+        return "\n\nFamily:\n\tmother:" + mother.prettyFormat() +
+                "\tfather:" + father.prettyFormat() +
+                "children:\n" + children.toString() +
+                "Pets:\n" + pets;
+    }
+
 
     public Human bornChild() {
         return deliverABaby(this);

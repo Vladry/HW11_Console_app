@@ -5,35 +5,50 @@ import hw11.family.Animals.DomesticCat;
 import hw11.family.Animals.Fish;
 import hw11.family.service.Services;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class FamilyController {
-    public Services FamilyService ;
+    public Services FamilyService;
 
     public FamilyController(Services service) {
-        this.FamilyService  = service;
+        this.FamilyService = service;
     }
 
 
-    public void doControl(){
+    public void doControl() {
         // проверка метода создания животных и метода получения семьи по ID:
-        FamilyService.addPet(1, new Dog("Dog_Fam1"));
-        FamilyService.addPet(2, new DomesticCat("Cat_Fam2"));
-        FamilyService.addPet(3, new Fish("Fish_Fam3"));
-        FamilyService.getFamilyById(1);
-        FamilyService.getFamilyById(2);
-        FamilyService.getFamilyById(3);
-
+//        FamilyService.addPet(1, new Dog("Dog_Fam1"));
+//        FamilyService.addPet(2, new DomesticCat("Cat_Fam2"));
+//        FamilyService.addPet(3, new Fish("Fish_Fam3"));
+//        FamilyService.getFamilyById(1);
+//        FamilyService.getFamilyById(2);
+//        FamilyService.getFamilyById(3);
 
 
 //последовательно раскомментируй для проверки остальных методов:
 
-        FamilyService.displayAllFamilies();
-        FamilyService.getFamiliesBiggerThan(4);
-        FamilyService.getFamiliesLessThan(4);
-        FamilyService.countFamiliesWithMemberNumber(4);
-        FamilyService.deleteFamilyByIndex(1);
+//        FamilyService.displayAllFamilies();
+//        FamilyService.getFamiliesBiggerThan(4);
+//        FamilyService.getFamiliesLessThan(4);
+//        FamilyService.countFamiliesWithMemberNumber(4);
+//        FamilyService.deleteFamilyByIndex(1);
 //        FamilyService.deleteAllChildrenOlderThen(9);
-        FamilyService.count();
+//        FamilyService.count();
 
+
+        while (true) {
+            Menu.showMenue();
+            String choice = Menu.getChoice();
+            Pattern pattern = Pattern.compile("q|exit|quit", Pattern.CASE_INSENSITIVE);
+            Matcher matcher = pattern.matcher(choice);
+            if (matcher.find() ){
+                System.out.println("you've quit from application!");
+                break;
+        }
+            Menu.actionConfirmation(choice);
+
+        } ;
     }
 
 
