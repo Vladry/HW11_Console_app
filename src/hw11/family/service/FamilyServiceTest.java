@@ -43,7 +43,7 @@ public class FamilyServiceTest {
         )
         );
 
-        CollectionFamilyDao<Family> familyMemStorage = new CollectionFamilyDao<>();
+        CollectionFamilyDao familyMemStorage = new CollectionFamilyDao();
         module = new FamilyService(familyMemStorage);
         Menu menu = new Menu();
         FamilyController controller = new FamilyController(module, menu);

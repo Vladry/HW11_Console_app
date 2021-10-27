@@ -5,19 +5,19 @@ import hw11.family.People.Family;
 import java.util.LinkedList;
 import java.util.List;
 
-public class CollectionFamilyDao<T> implements FamilyDAO<T> {
+public class CollectionFamilyDao implements FamilyDAO {
 
-    private final List<T> memoryStore;
+    private final List<Family> memoryStore;
 
     {
-        memoryStore = new LinkedList<T>();
+        memoryStore = new LinkedList<Family>();
     }
 
-    public List<T> getAllFamilies() {
+    public List<Family> getAllFamilies() {
         return memoryStore;
     }
 
-    public T getFamilyByIndex(int i) {
+    public Family getFamilyByIndex(int i) {
         try {
             return memoryStore.get(i);
         } catch (NullPointerException e) {
@@ -38,7 +38,7 @@ public class CollectionFamilyDao<T> implements FamilyDAO<T> {
         }
     }
 
-    public boolean deleteFamily(T o) { //TODO дописать
+    public boolean deleteFamily(Family o) { //TODO дописать
         Family testFam = null;
         try {
             memoryStore.remove(o);
@@ -48,7 +48,7 @@ public class CollectionFamilyDao<T> implements FamilyDAO<T> {
         }
     }
 
-    public boolean saveFamily(T o) {
+    public boolean saveFamily(Family o) {
         if (memoryStore.contains(o)) {
             memoryStore.set(memoryStore.indexOf(o), o);
         } else {
@@ -59,9 +59,8 @@ public class CollectionFamilyDao<T> implements FamilyDAO<T> {
     }
 
     public boolean deleteChild(int famIndex, int childIndex) {
-        Family current = (Family)memoryStore.get(famIndex);
-        current.getChildren().remove(childIndex);
-        saveFamily( (T)current );
+//        memoryStore.get(famIndex).getChildren().get(childIndex).remove(childIndex);
+//        saveFamily( (Family)current );
         return true;
     }
 

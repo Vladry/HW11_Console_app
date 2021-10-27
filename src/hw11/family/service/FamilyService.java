@@ -19,9 +19,9 @@ import java.util.stream.IntStream;
 import static java.lang.Integer.parseInt;
 
 public class FamilyService implements Services {
-    public FamilyDAO<Family> dao;
+    public FamilyDAO dao;
 
-    public FamilyService(FamilyDAO<Family> dao) {
+    public FamilyService(FamilyDAO dao) {
         this.dao = dao;
     }
 
@@ -67,8 +67,10 @@ public class FamilyService implements Services {
             switch (sex) {
                 case MASCULINE:
                     newChild = new Man("мальчик: " + name, surname, birthDate, babyIq, family.getFather().getSchedule(), family);
+                    break;
                 case FEMININE:
                     newChild = new Woman("девочка: " + name, (surname + "a"), birthDate, babyIq, family.getFather().getSchedule(), family);
+                    break;
                 default:
             }
 
@@ -196,20 +198,17 @@ public class FamilyService implements Services {
         if (age <= 0) return false;
         List<Family> families = dao.getAllFamilies();
         int yearNow = LocalDate.now().getYear();
-        IntStream.range(0, families.size()).forEach(famIndx ->
-                 {
-                    IntStream.range(0, families .get(famIndx).getChildren().size()  ).forEach(chidIndex ->{
-                        int birthYear = families.get(famIndx).getChildren().get(chidIndex).getBirthDate().getYear();
-                        if (yearNow - birthYear > age) {
-                            System.out.println("this child is: " + (yearNow - birthYear) + " years old and must be deleted!");
-                            System.out.println("deleting: " + families.get(famIndx).getChildren().get(chidIndex));
-                            dao.deleteChild(famIndx, chidIndex);
-                        }
-                    }); //close chidIndex range
-                } //close famIndx range
-        );
-        System.out.println("after removal of children aged over " + age + " years old: ");
-        System.out.println(dao.getAllFamilies());
+        for (int famIndx = 0; famIndx < families.size(); famIndx++) {
+
+            for (int chidIndex = 0; chidIndex < families.get(famIndx).getChildren().size(); chidIndex++) {
+                int birthYear = families.get(famIndx).getChildren().get(chidIndex).getBirthDate().getYear();
+                if (yearNow - birthYear > age) {
+                    System.out.println("this child is: " + (yearNow - birthYear) + " years old and must be deleted!");
+                    System.out.println("deleting: " + families.get(famIndx).getChildren().get(chidIndex) );
+                    dao.deleteChild(famIndx, chidIndex);
+                }
+            }
+        }
         return true;
     }
 

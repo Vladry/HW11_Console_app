@@ -1,13 +1,15 @@
 package hw11.family.DAO;
 
+import hw11.family.People.Family;
+
 import java.util.List;
 
-public interface FamilyDAO<T> {
+public interface FamilyDAO {
 
-    List<T> getAllFamilies();
-    T getFamilyByIndex(int i);
+    List<Family> getAllFamilies();
+    Family getFamilyByIndex(int i);
     boolean deleteFamily(int i);
-    boolean deleteFamily(T o);
-    boolean saveFamily(T o);
+    boolean deleteFamily(Family o);
+    boolean saveFamily(Family o);
     boolean deleteChild(int famIndex, int childIndex);
 }
