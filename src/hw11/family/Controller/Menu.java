@@ -1,16 +1,13 @@
 package hw11.family.Controller;
 
 import hw11.family.IncorrectChoiceException;
-import hw11.family.People.Human;
-import hw11.family.People.Woman;
 import hw11.family.service.FamilyService;
 
 import java.util.*;
-
 import static java.util.Map.entry;
 
 public class Menu {
-    private static final TreeMap<String, String> items = new TreeMap<>(
+    private final TreeMap<String, String> items = new TreeMap<>(
             Map.ofEntries(
                     entry("1", "auto-generate families"),
                     entry("2", "show all families"),
@@ -25,14 +22,14 @@ public class Menu {
     );
     public Map<String, String> params = new HashMap<>(Map.of(
             "name",           "empty",
-            "last name",      "empty",
-            "year of birth",  "empty",
-            "month of birth", "empty",
-            "date of birth",  "empty",
+            "surname",      "empty",
+            "year of birth (format: 'yyyy')",  "empty",
+            "month of birth (format: 'mm')", "empty",
+            "date of birth (format: 'dd')",  "empty",
             "iq",             "empty"
     ));
 
-    public static void showMenue() {
+    public void showMenue() {
 //        NavigableMap<String, String> navMenu = items.descendingMap();  //для режима reverse menu
         Iterator<Map.Entry<String, String>> iterator = items.entrySet().iterator();
         Map.Entry<String, String> entry = null;
@@ -48,7 +45,7 @@ public class Menu {
         System.out.println("Provide the following ->");
         for(Map.Entry<String, String> menuItem : this.params.entrySet() ) {
             System.out.println("input " + menuItem.getKey() + ": ");
-            menuItem.setValue(hw11.family.service.FamilyService.getKeyboardInput());
+            menuItem.setValue(FamilyService.getKeyboardInput());
         };
     }
 
@@ -57,19 +54,29 @@ public class Menu {
         return FamilyService.getKeyboardInput();
     }
 
-    public static boolean actionConfirmation(String choice) {
+    public boolean actionConfirmation(String choice) {
         String errMsg = "There's no such option. Please, re-input your choice:";
         String action = null;
         try {
             action = items.get(choice);
             if (action == null) throw new IncorrectChoiceException(errMsg);
-            System.out.print("you've chosen: " + choice + ". Now, we'll ");
-            System.out.println(action);
+                System.out.print("you've chosen: " + choice + ". Now, we'll ");
+                System.out.println(action);
+
         } catch (IncorrectChoiceException e) {
             System.out.println(e.getMessage());
             return false;
         }
         return true;
+    }
+
+    public String invokeSubmenu(){
+        System.out.println("you've entered child processing section, select operation:");
+        System.out.println("1 - to register new born child");
+        System.out.println("2 - to adopt a child");
+        System.out.println("3 - exit");
+        return FamilyService.getKeyboardInput();
+
     }
 
 }

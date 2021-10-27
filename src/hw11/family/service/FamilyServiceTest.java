@@ -3,6 +3,7 @@ package hw11.family.service;
 import hw11.family.Animals.Dog;
 import hw11.family.Animals.Pet;
 import hw11.family.Controller.FamilyController;
+import hw11.family.Controller.Menu;
 import hw11.family.DAO.CollectionFamilyDao;
 import hw11.family.People.Family;
 import org.junit.Before;
@@ -44,7 +45,8 @@ public class FamilyServiceTest {
 
         CollectionFamilyDao<Family> familyMemStorage = new CollectionFamilyDao<>();
         module = new FamilyService(familyMemStorage);
-        FamilyController controller = new FamilyController(module);
+        Menu menu = new Menu();
+        FamilyController controller = new FamilyController(module, menu);
         //задание прочих входных параметров для создания семей:
         Random rnd = new Random();
         int amntOwn, amntAdopted;

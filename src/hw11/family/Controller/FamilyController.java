@@ -2,6 +2,7 @@ package hw11.family.Controller;
 
 import hw11.family.People.Family;
 import hw11.family.People.Human;
+import hw11.family.service.FamilyService;
 import hw11.family.service.Services;
 
 import java.time.LocalDate;
@@ -17,9 +18,11 @@ import static java.lang.Integer.parseInt;
 
 public class FamilyController {
     public Services FamilyService;
+    public Menu menu;
 
-    public FamilyController(Services service) {
+    public FamilyController(Services service, Menu menu) {
         this.FamilyService = service;
+        this.menu = menu;
     }
 
     public void doControl() {
@@ -36,9 +39,10 @@ public class FamilyController {
 //        FamilyService.deleteAllChildrenOlderThen(9);
 //        FamilyService.count();
 
-
+        Menu menu = new Menu();
         while (true) {
-            Menu.showMenue();
+
+            menu.showMenue();
             String choice = Menu.getChoice();
             Pattern pattern = Pattern.compile("q|exit|quit|учше|йгше", Pattern.CASE_INSENSITIVE);
             Matcher matcher = pattern.matcher(choice);
@@ -46,12 +50,10 @@ public class FamilyController {
                 System.out.println("you've quit from application!");
                 break;
             }
-            boolean skipFlag = Menu.actionConfirmation(choice);
+            boolean skipFlag = menu.actionConfirmation(choice);
             if (!skipFlag) {
                 continue;
             }
-//            System.out.println("choice is approved, let's continue...");
-
             processRequests(choice);
         }
     }
@@ -99,15 +101,9 @@ public class FamilyController {
         System.out.println("Input number of family members: ");
         return parseInt(hw11.family.service.FamilyService.getKeyboardInput());
     }
-    private boolean checkInputInt(int ind, int size){
-        if (ind < 0 || ind > size) {
-            System.out.println("incorrect number, returning to main menu");
-            return false;
-        }
-        return true;
-    }
 
-//TODO:   доделывать случаи:   6(написать), 8(дописать),  9(ошибка)
+
+//TODO:   доделывать случаи:   8(дописать),  9(ошибка)
     public void processRequests(String choice) {
         switch (choice) {
             case "1":
@@ -132,7 +128,6 @@ public class FamilyController {
                 Menu subMenu = new Menu();
                 System.out.println("creating mother:");
                 subMenu.getOneFamilyMemberInputDetails();
-                System.out.println("параметры матери: " + subMenu.params);
                 Human mom = FamilyService.createMember(subMenu.params, "mom");
                 System.out.println("creating father:");
                 subMenu.getOneFamilyMemberInputDetails();
@@ -148,17 +143,13 @@ public class FamilyController {
                 int familiesLeft = FamilyService.count() - 1;
                 System.out.println("available range: from 0 to " + (familiesLeft));
                 int famIndex = parseInt(hw11.family.service.FamilyService.getKeyboardInput());
-                if (!checkInputInt(famIndex, familiesLeft)) {break;}
+                if (!FamilyService.checkInputInt(famIndex, familiesLeft)) {break;}
                 FamilyService.deleteFamilyByIndex(famIndex);
                 break;
             case "8":
-                System.out.println("Input family number:");
-                int familiesTotal = FamilyService.count() - 1;
-                System.out.println("available range: from 0 to " + (familiesTotal));
-                int famNumber = parseInt(hw11.family.service.FamilyService.getKeyboardInput());
-                if (!checkInputInt(famNumber, familiesTotal) ) {break;}
-
-                break;
+                  String sChoice = menu.invokeSubmenu();
+                  processSubmenu(sChoice);
+                    break;
             case "9":
                 System.out.println("Input age of children being deleted:");
                 int age = parseInt(hw11.family.service.FamilyService.getKeyboardInput());
@@ -172,6 +163,42 @@ public class FamilyController {
                 System.out.println("больше нет команд");
         }
 
+    }
+
+    private void processSubmenu(String choice) {
+        switch(choice){
+            case "1":
+                System.out.println("registering birth of a child->");
+                int birthFamIndex = FamilyService.getIndex("Input index of family:");
+                if (birthFamIndex < 0) {break;}
+                System.out.println("provide boy's name(оставь пустым и жми ввод, если будет девочка!");
+                String bName = hw11.family.service.FamilyService.getKeyboardInput();
+                System.out.println("provide girl's name (если выше задал имя мальчику- жми ввод, без имени девочки!)");
+                String gName = hw11.family.service.FamilyService.getKeyboardInput();
+                FamilyService.register(birthFamIndex, bName, gName);
+                break;
+            case "2":
+                System.out.println("adopting a child->");
+                int adoptFamIndex = FamilyService.getIndex("Input index of family:");
+                if (adoptFamIndex < 0) {break;}
+                System.out.println("provide name:");
+                String name = hw11.family.service.FamilyService.getKeyboardInput();
+                System.out.println("provide surname:");
+                String surname = hw11.family.service.FamilyService.getKeyboardInput();
+                System.out.println("provide patrName:");
+                String patrName = hw11.family.service.FamilyService.getKeyboardInput();
+                System.out.println("provide birthDate (accepted format: 'dd:mm:yyyy'):");
+                String birthDateRaw = hw11.family.service.FamilyService.getKeyboardInput();
+                System.out.println("provide iq:");
+                String iq = hw11.family.service.FamilyService.getKeyboardInput();
+                FamilyService.adopt(adoptFamIndex, name, surname, patrName, birthDateRaw, parseInt(iq));
+                break;
+            case "3":
+                System.out.println("exiting to main menu");
+                break;
+            default:
+                System.out.println("idle exit to main menu");
+        }
     }
 
 }

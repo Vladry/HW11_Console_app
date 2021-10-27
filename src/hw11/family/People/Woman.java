@@ -23,7 +23,6 @@ final public class Woman extends Human {
 
     public Woman(String name, String surname, String birthYear, String birthMonth, String birthDay, int iq) {
         super();
-        System.out.println("в Woman прилетели параметры: " + name +surname +birthYear + birthMonth + birthDay + iq);
         String setDate = birthDay+":"+ birthMonth +":"+birthYear;
         System.out.println("конструктор устанавливает LocalDate: " + setDate);
         this.setBirthDate(LocalDate.parse(birthDay+":"+ birthMonth +":"+birthYear,

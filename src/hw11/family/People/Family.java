@@ -45,7 +45,7 @@ public class Family implements HumanCreator {
 
 
     public Human bornChild() {
-        return deliverABaby(this);
+        return deliverABaby(this, null, null);
     }
 
     public void addChild(Human child) {

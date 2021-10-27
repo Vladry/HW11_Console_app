@@ -11,6 +11,11 @@ import java.util.Optional;
 
 public interface Services {
     public Human createMember(Map<String, String> params, String member);
+    public void register(int birthFamIndex, String bName, String gName);
+    public int getIndex(String msg);
+//    public String getKeyboardInput();
+    public boolean checkInputInt(int ind, int size);
+    public void adopt(int adoptFamIndex, String name, String surname, String patrName, String birthDateRaw, int iq);
     public void saveFam(Family f);
     //-получим от FamilyDAO:   List<Family> getAllFamilies();//получить список всех семей
     void displayAllFamilies(); //вывести на экран все семьи (в индексированном списке) со всеми членами семьи.

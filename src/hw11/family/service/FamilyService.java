@@ -34,17 +34,44 @@ public class FamilyService implements Services {
         }
         return choice;
     }
+    public boolean checkInputInt(int ind, int size){
+        if (ind < 0 || ind > size) {
+            System.out.println("incorrect number, returning to main menu");
+            return false;
+        }
+        return true;
+    }
+    public int getIndex(String msg){
+        System.out.println(msg);
+        int familiesTotal = dao.getAllFamilies().size();
+        System.out.println("available range: from 0 to " + (familiesTotal - 1));
+        int famNumber = parseInt(getKeyboardInput());
+        if (!checkInputInt(famNumber, familiesTotal) ) return -1;
+        return famNumber;
+    }
+
+    public void register(int birthFamIndex, String bName, String gName){
+        Family family = dao.getAllFamilies().get(birthFamIndex);
+        Human newChild = BabyFactory.deliverABaby(family, bName, gName);
+        assert newChild != null;
+        family.setChildren(newChild);
+        saveFam(family);
+    };
+    public void adopt(int adoptFamIndex, String name, String surname, String patrName, String birthDateRaw, int iq){
+//  Family FamilyService.adoptChild(Family family, Human newBaby)
+
+    };
 
     public Human createMember(Map<String, String> params, String member){
         if (member.equals("mom")) {
-            return new Woman(params.get("name"), params.get("last name"),
-                    params.get("year of birth"), params.get("month of birth"),
-                    params.get("date of birth"), parseInt(params.get("iq")));
+            return new Woman(params.get("name"), params.get("surname"),
+                    params.get("year of birth (format: 'yyyy')"), params.get("month of birth (format: 'mm')"),
+                    params.get("date of birth (format: 'dd')"), parseInt(params.get("iq")));
         } else if (member.equals("dad"))
         {
             return new Man(params.get("name"), params.get("last name"),
-                    params.get("year of birth"), params.get("month of birth"),
-                    params.get("date of birth"), parseInt(params.get("iq")));
+                    params.get("year of birth (format: 'yyyy')"), params.get("month of birth (format: 'mm')"),
+                    params.get("date of birth (format: 'dd')"), parseInt(params.get("iq")));
         }
         return null;
     };
@@ -144,8 +171,6 @@ public class FamilyService implements Services {
         family.setChildren(newBaby);
         return family;
     }
-
-    ;
 
     public Family adoptChild(Family family, Human newBaby) {
         bornChild(family, family.getFather().getName(), family.getMother().getName());
