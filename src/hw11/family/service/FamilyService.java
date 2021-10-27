@@ -7,6 +7,7 @@ import hw11.family.People.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -57,10 +58,23 @@ public class FamilyService implements Services {
         family.setChildren(newChild);
         saveFam(family);
     };
-    public void adopt(int adoptFamIndex, String name, String surname, String patrName, String birthDateRaw, int iq){
-//  Family FamilyService.adoptChild(Family family, Human newBaby)
+    public void adopt(int adoptFamIndex, String name, String surname, String SEX, String birthDateRaw, int babyIq){
+        Family family = dao.getAllFamilies().get(adoptFamIndex);
+        Human newChild = null;
+        Sex sex = (SEX.equals("m")) ? Sex.MASCULINE : Sex.FEMININE;
+         LocalDate birthDate = LocalDate.parse(birthDateRaw, DateTimeFormatter.ofPattern("dd:MM:yyyy") );
 
-    };
+            switch (sex) {
+                case MASCULINE:
+                    newChild = new Man("мальчик: " + name, surname, birthDate, babyIq, family.getFather().getSchedule(), family);
+                case FEMININE:
+                    newChild = new Woman("девочка: " + name, (surname + "a"), birthDate, babyIq, family.getFather().getSchedule(), family);
+                default:
+            }
+
+        family.setChildren(newChild);
+        saveFam(family);
+    }
 
     public Human createMember(Map<String, String> params, String member){
         if (member.equals("mom")) {

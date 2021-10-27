@@ -185,13 +185,13 @@ public class FamilyController {
                 String name = hw11.family.service.FamilyService.getKeyboardInput();
                 System.out.println("provide surname:");
                 String surname = hw11.family.service.FamilyService.getKeyboardInput();
-                System.out.println("provide patrName:");
-                String patrName = hw11.family.service.FamilyService.getKeyboardInput();
+                System.out.println("provide sex (format:  f/m ) ->");
+                String sex = hw11.family.service.FamilyService.getKeyboardInput();
                 System.out.println("provide birthDate (accepted format: 'dd:mm:yyyy'):");
                 String birthDateRaw = hw11.family.service.FamilyService.getKeyboardInput();
                 System.out.println("provide iq:");
                 String iq = hw11.family.service.FamilyService.getKeyboardInput();
-                FamilyService.adopt(adoptFamIndex, name, surname, patrName, birthDateRaw, parseInt(iq));
+                FamilyService.adopt(adoptFamIndex, name, surname, sex, birthDateRaw, parseInt(iq));
                 break;
             case "3":
                 System.out.println("exiting to main menu");
