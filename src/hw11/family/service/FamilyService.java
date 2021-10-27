@@ -2,6 +2,7 @@ package hw11.family.service;
 
 import hw11.family.Animals.*;
 import hw11.family.DAO.FamilyDAO;
+import hw11.family.FamilyOverflowException;
 import hw11.family.People.*;
 
 import java.io.BufferedReader;
@@ -55,7 +56,13 @@ public class FamilyService implements Services {
         Family family = dao.getAllFamilies().get(birthFamIndex);
         Human newChild = BabyFactory.deliverABaby(family, bName, gName);
         assert newChild != null;
-        family.setChildren(newChild);
+        try {
+            family.setChildren(newChild);
+            if (family.countFamily(family.getChildren().size()) >= 5)
+                throw new FamilyOverflowException("Family grows too big!");
+        } catch(FamilyOverflowException e){
+            System.out.println(e.getMessage());
+        }
         saveFam(family);
     };
     public void adopt(int adoptFamIndex, String name, String surname, String SEX, String birthDateRaw, int babyIq){
@@ -73,8 +80,13 @@ public class FamilyService implements Services {
                     break;
                 default:
             }
-
-        family.setChildren(newChild);
+try {
+    family.setChildren(newChild);
+    if (family.countFamily(family.getChildren().size()) >= 5)
+        throw new FamilyOverflowException("Family grows too big!");
+}catch(FamilyOverflowException e){
+    System.out.println(e.getMessage());
+}
         saveFam(family);
     }
 
@@ -144,6 +156,7 @@ public class FamilyService implements Services {
             adoptChild(family, new Man("fake", "fake", LocalDate.now()));
 //            System.out.println("adopted a child: " + family.getChildren().get(ownChildren + i).toString());
         }
+
         dao.saveFamily(family);
         return true;
     }
@@ -184,7 +197,12 @@ public class FamilyService implements Services {
             default:
         }
 
-        family.setChildren(newBaby);
+        try {
+            family.setChildren(newBaby);
+            if (family.countFamily(family.getChildren().size()) >= 5 ) throw new FamilyOverflowException("Family grows too big!");
+        } catch(FamilyOverflowException e) {
+            System.out.println(e.getMessage());
+        }
         return family;
     }
 
