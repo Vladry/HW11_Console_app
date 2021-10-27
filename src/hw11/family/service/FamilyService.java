@@ -8,11 +8,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 import java.time.LocalDate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import static java.lang.Integer.parseInt;
 
 public class FamilyService implements Services {
     public FamilyDAO<Family> dao;
@@ -31,6 +34,20 @@ public class FamilyService implements Services {
         }
         return choice;
     }
+
+    public Human createMember(Map<String, String> params, String member){
+        if (member.equals("mom")) {
+            return new Woman(params.get("name"), params.get("last name"),
+                    params.get("year of birth"), params.get("month of birth"),
+                    params.get("date of birth"), parseInt(params.get("iq")));
+        } else if (member.equals("dad"))
+        {
+            return new Man(params.get("name"), params.get("last name"),
+                    params.get("year of birth"), params.get("month of birth"),
+                    params.get("date of birth"), parseInt(params.get("iq")));
+        }
+        return null;
+    };
 
     public void displayAllFamilies() {
         System.out.println("all families to screen: ");
@@ -88,6 +105,10 @@ public class FamilyService implements Services {
         return true;
     }
 
+    public void saveFam(Family f){
+        dao.saveFamily(f);
+    }
+
     public boolean deleteFamilyByIndex(int i) {
         dao.deleteFamily(i);
         return false;
@@ -137,8 +158,8 @@ public class FamilyService implements Services {
         List<Family> families = dao.getAllFamilies();
         int yearNow = LocalDate.now().getYear();
         IntStream.range(0, families.size()).forEach(famIndx ->
-                {
-                    IntStream.range(0, families.get(famIndx).getChildren().size()  ).forEach(chidIndex -> {
+                 {
+                    IntStream.range(0, families .get(famIndx).getChildren().size()  ).forEach(chidIndex ->{
                         int birthYear = families.get(famIndx).getChildren().get(chidIndex).getBirthDate().getYear();
                         if (yearNow - birthYear > age) {
                             System.out.println("this child is: " + (yearNow - birthYear) + " years old and must be deleted!");

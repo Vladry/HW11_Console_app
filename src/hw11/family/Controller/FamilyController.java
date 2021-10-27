@@ -1,6 +1,7 @@
 package hw11.family.Controller;
 
-import hw11.family.service.FamilyService;
+import hw11.family.People.Family;
+import hw11.family.People.Human;
 import hw11.family.service.Services;
 
 import java.time.LocalDate;
@@ -94,7 +95,6 @@ public class FamilyController {
                     dadBirthDate, momBirthDate, amntOwn, amntAdopted);
         }
     }
-
     private int getAmtOfMembers() {
         System.out.println("Input number of family members: ");
         return parseInt(hw11.family.service.FamilyService.getKeyboardInput());
@@ -107,6 +107,7 @@ public class FamilyController {
         return true;
     }
 
+//TODO:   доделывать случаи:   6(написать), 8(дописать),  9(ошибка)
     public void processRequests(String choice) {
         switch (choice) {
             case "1":
@@ -128,6 +129,18 @@ public class FamilyController {
                         + " families with " + searchedMembers + " family members in them");
                 break;
             case "6":
+                Menu subMenu = new Menu();
+                System.out.println("creating mother:");
+                subMenu.getOneFamilyMemberInputDetails();
+                System.out.println("параметры матери: " + subMenu.params);
+                Human mom = FamilyService.createMember(subMenu.params, "mom");
+                System.out.println("creating father:");
+                subMenu.getOneFamilyMemberInputDetails();
+                Human dad = FamilyService.createMember(subMenu.params, "dad");
+                Family newFam = new Family(dad, mom);
+                dad.setFamily(newFam);
+                mom.setFamily(newFam);
+                FamilyService.saveFam(newFam);
 
                 break;
             case "7":
@@ -145,14 +158,15 @@ public class FamilyController {
                 int famNumber = parseInt(hw11.family.service.FamilyService.getKeyboardInput());
                 if (!checkInputInt(famNumber, familiesTotal) ) {break;}
 
-
-
-
                 break;
             case "9":
                 System.out.println("Input age of children being deleted:");
                 int age = parseInt(hw11.family.service.FamilyService.getKeyboardInput());
+            try{
                 FamilyService.deleteAllChildrenOlderThen(age);
+            }catch(Exception e){
+                System.out.println("error in deleteAllChildrenOlderThen");
+            }
                 break;
             default:
                 System.out.println("больше нет команд");

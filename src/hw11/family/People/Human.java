@@ -45,6 +45,21 @@ public abstract class Human {
         this.birthDate = birthDate;
     }
 
+    Human(String name, String surname, String birthYear, String birthMonth, String birthDay, int iq) {
+        this.birthDate = LocalDate.parse(birthDay+":"+ birthMonth +":"+birthYear,
+                            DateTimeFormatter.ofPattern("dd:MM:yyyy"));
+        this.name = name;
+        this.surname = surname;
+        this.iq = iq;
+    }
+
+    Human(String name, String surname, LocalDate birthDate, int iq) {
+        this(name, surname, birthDate);
+        this.iq = iq;
+    }
+
+
+
     Human(String name, String surname, LocalDate birthDate,
           int iq, Map<DayOfWeek, List<String>> schedule, Family family) {
         this(name, surname, birthDate);
@@ -110,67 +125,45 @@ public abstract class Human {
         return this.name;
     }
 
-    ;
-
     public void setName(String name) {
         this.name = name;
     }
-
-    ;
 
     public String getSurname() {
         return this.surname;
     }
 
-    ;
-
     public void setSurname(String surname) {
         this.surname = surname;
     }
-
-    ;
 
     public LocalDate getBirthDate() {
         return this.birthDate;
     }
 
-    ;
-
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
-
-    ;
 
     public int getIq() {
         return this.iq;
     }
 
-    ;
-
     public void setIq(int iq) {
         this.iq = iq;
     }
-
-    ;
 
     public Map<DayOfWeek, List<String>> getSchedule() {
         return this.schedule;
     }
 
-    ;
-
     public void setSchedule(Map<DayOfWeek, List<String>> schedule) {
         this.schedule = schedule;
     }
 
-    ;
-
     public Family getFamily() {
         return this.family;
     }
-
-    ;
 
     public void setFamily(Family family) {
         this.family = family;

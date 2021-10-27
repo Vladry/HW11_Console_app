@@ -6,10 +6,12 @@ import hw11.family.People.Human;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface Services {
-//    public String getKeyboardInput();
+    public Human createMember(Map<String, String> params, String member);
+    public void saveFam(Family f);
     //-получим от FamilyDAO:   List<Family> getAllFamilies();//получить список всех семей
     void displayAllFamilies(); //вывести на экран все семьи (в индексированном списке) со всеми членами семьи.
     Optional<List<Family>> getFamiliesBiggerThan(int num);//найти семьи с количеством людей больше чем (принимает количество человек и возвращает все семьи где количество людей больше чем указанное); выводит информацию на экран.

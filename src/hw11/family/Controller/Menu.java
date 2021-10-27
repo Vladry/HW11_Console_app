@@ -1,6 +1,8 @@
 package hw11.family.Controller;
 
 import hw11.family.IncorrectChoiceException;
+import hw11.family.People.Human;
+import hw11.family.People.Woman;
 import hw11.family.service.FamilyService;
 
 import java.util.*;
@@ -21,12 +23,17 @@ public class Menu {
                     entry("9", "delete children older than")
             )
     );
-    private static final List<String> subItem6 = new LinkedList<>(List.of(
-            "name", "last name", "year of birth", "month of birth", "date of birth", "iq"));
-
+    public Map<String, String> params = new HashMap<>(Map.of(
+            "name",           "empty",
+            "last name",      "empty",
+            "year of birth",  "empty",
+            "month of birth", "empty",
+            "date of birth",  "empty",
+            "iq",             "empty"
+    ));
 
     public static void showMenue() {
-//        NavigableMap<String, String> navMenu = items.descendingMap();  //для reverse menu
+//        NavigableMap<String, String> navMenu = items.descendingMap();  //для режима reverse menu
         Iterator<Map.Entry<String, String>> iterator = items.entrySet().iterator();
         Map.Entry<String, String> entry = null;
         System.out.println("\n\nchoose an operation out of the following possible options:\n");
@@ -35,6 +42,14 @@ public class Menu {
             System.out.print("choose " + entry.getKey() + " to ");
             System.out.println(entry.getValue() + ";");
         }
+    }
+
+    public void getOneFamilyMemberInputDetails(){
+        System.out.println("Provide the following ->");
+        for(Map.Entry<String, String> menuItem : this.params.entrySet() ) {
+            System.out.println("input " + menuItem.getKey() + ": ");
+            menuItem.setValue(hw11.family.service.FamilyService.getKeyboardInput());
+        };
     }
 
     public static String getChoice() {
