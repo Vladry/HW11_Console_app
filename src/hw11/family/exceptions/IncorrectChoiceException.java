@@ -1,4 +1,4 @@
-package hw11.family;
+package hw11.family.exceptions;
 
 public class IncorrectChoiceException extends Exception {
 

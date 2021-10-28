@@ -1,6 +1,6 @@
 package hw11.family.Controller;
 
-import hw11.family.IncorrectChoiceException;
+import hw11.family.exceptions.IncorrectChoiceException;
 import hw11.family.service.FamilyService;
 
 import java.util.*;

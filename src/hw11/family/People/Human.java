@@ -74,7 +74,8 @@ public abstract class Human {
         this.name = name;
         this.surname = surname;
         this.iq = iq;
-        this.birthDate = LocalDate.parse(birthDateStr, DateTimeFormatter.ofPattern("dd/MM/yyyy"));  // 20/03/2016
+        this.birthDate =
+                LocalDate.parse(birthDateStr, DateTimeFormatter.ofPattern("dd/MM/yyyy"));  // 20/03/2016
     }
 
     public String prettyFormat() {

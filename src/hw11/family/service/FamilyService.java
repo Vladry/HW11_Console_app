@@ -2,7 +2,7 @@ package hw11.family.service;
 
 import hw11.family.Animals.*;
 import hw11.family.DAO.FamilyDAO;
-import hw11.family.FamilyOverflowException;
+import hw11.family.exceptions.FamilyOverflowException;
 import hw11.family.People.*;
 
 import java.io.BufferedReader;
@@ -15,7 +15,6 @@ import java.util.Optional;
 import java.util.Random;
 import java.time.LocalDate;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import static java.lang.Integer.parseInt;
 

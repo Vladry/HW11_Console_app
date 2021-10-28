@@ -1,6 +1,5 @@
 package hw11.family.DAO;
 
-import hw11.family.FamilyOverflowException;
 import hw11.family.People.Family;
 
 import java.util.LinkedList;
@@ -49,18 +48,17 @@ public class CollectionFamilyDao implements FamilyDAO {
         }
     }
 
+    public boolean deleteChild(int famIndex, int childIndex) {
+        memoryStore.get(famIndex).getChildren().remove(childIndex);
+        return true;
+    }
+
     public boolean saveFamily(Family o) {
         if (memoryStore.contains(o)) {
             memoryStore.set(memoryStore.indexOf(o), o);
         } else {
             memoryStore.add(o);
-
         }
-        return true;
-    }
-
-    public boolean deleteChild(int famIndex, int childIndex) {
-        memoryStore.get(famIndex).getChildren().remove(childIndex);
         return true;
     }
 
